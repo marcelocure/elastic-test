@@ -49,19 +49,22 @@ module.exports = {
         .catch(errorHandler);
     },
     search: (index, type, query) => {
-        const client = getClient();
+        const client = getClient()
+        var result
         return client.search({
             index: index,
             type: type,
             body: {
                 query: query
             }
-        }).then(function (resp) {
-            return resp.hits.hits;
         })
-        .then(() => {
+        .then(resp => {
+            result =  resp.hits.hits;
             console.log('Closing connection')
             return client.close()
+        })
+        .then(() => {
+            return result;
         })
         .catch(errorHandler);
     }

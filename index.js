@@ -1,15 +1,25 @@
-// var elasticsearch = require('elasticsearch');
 const elasticRepository = require('./app/elasticRepository');
 return elasticRepository.setup()
 .then(() => {
     const doc = {
-        eventType: 'eventType1',
+        eventType: 'device.deactivated',
         body: 'body1',
-        date: 'date1'
+        date: new Date().toString()
     }
     return elasticRepository.createDocument("fuse-events", "fuse-event", doc);
 })
-
+.then(() => {
+    const query = {
+      match: {
+        eventType: 'device.deactivated'
+        // body: {eventType: 'device.activated'}
+      }
+    }
+    return elasticRepository.search("fuse-events", "fuse-event", query)
+})
+.then(result => {
+    console.log(result)
+})
 
 // client.search({
 //   index: 'twitter',
