@@ -24,7 +24,7 @@ module.exports = {
             console.log(resp)
             if (resp) return
             return client.indices.create({
-                index: "fuse-events",
+                index: config.eventsIndex,
                 body: fuseMappings
             })
         })
@@ -34,11 +34,11 @@ module.exports = {
         })
         .catch(errorHandler);
     },
-    createDocument: (index, type, body) => {
+    createDocument: (body) => {
         const client = getClient();
         return client.index({
-            index: index,
-            type: type,
+            index: config.eventsIndex,
+            type: config.eventsType,
             id: uuid(),
             body: body
         })
@@ -48,12 +48,12 @@ module.exports = {
         })
         .catch(errorHandler);
     },
-    search: (index, type, query) => {
+    search: (query) => {
         const client = getClient()
         var result
         return client.search({
-            index: index,
-            type: type,
+            index: config.eventsIndex,
+            type: config.eventsType,
             body: {
                 query: query
             }
