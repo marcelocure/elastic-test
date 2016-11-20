@@ -1,6 +1,6 @@
 # elastic-test
 
-Sandobox project for playing with elastic search and nodeJS.
+Sandbox project for playing with elastic search and nodeJS.
 
 To run this project, follow the steps below:
 
